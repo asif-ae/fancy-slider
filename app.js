@@ -27,12 +27,16 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div);
   });
+
+  // toggleSpinner function is using here
   toggleSpinner();
 
 }
 
 const getImages = (query) => {
+  // toggleSpinner function is using here
   toggleSpinner();
+  
   fetch(`https://pixabay.com/api/?key=${KEY}&q=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
