@@ -36,7 +36,7 @@ const showImages = (images) => {
 const getImages = (query) => {
   // toggleSpinner function is using here
   toggleSpinner();
-  
+
   fetch(`https://pixabay.com/api/?key=${KEY}&q=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -45,14 +45,19 @@ const getImages = (query) => {
 
 let slideIndex = 0;
 
-// Get count item section and customize it
+// Get count item section
 const getCountItem = document.getElementById("count-item");
+
+// Customize count item section
 let countItem = parseInt(getCountItem.innerText);
+
+// Function for adding danger class
 const addDanger = () => {
   if (countItem < 2) {
     document.getElementById("danger-alert").classList.add("text-danger");
   }
 }
+// Function for removing danger class
 const removeDanger = () => {
   if (countItem > 1) {
     document.getElementById("danger-alert").classList.remove("text-danger");
@@ -67,16 +72,21 @@ const selectItem = (event, img) => {
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
+
+    // Calculate count-item section increasing
     const newCount = ++countItem;
     getCountItem.innerText = newCount;
+    // Using remove danger function
     removeDanger();
   } else {
+    // Calculate count-item section decreasing
     const newCount = --countItem;
     getCountItem.innerText = newCount;
+    // Using add danger function
     addDanger();
   }
 
-  // Delete specific item or image from array
+  // Delete specific(selected) item or image from array
   if (item > -1) {
     sliders.splice(item, 1);
   }
@@ -157,7 +167,7 @@ searchBtn.addEventListener('click', function () {
   getImages(search.value)
   sliders.length = 0;
 
-  // Customize count handler
+  // Customize count handler onclick search button
   getCountItem.innerText = "0";
   countItem = 0;
   document.getElementById("danger-alert").classList.add("text-danger");
@@ -167,6 +177,7 @@ sliderBtn.addEventListener('click', function () {
   createSlider();
 });
 
+// Enter key function for both search and duration input section
 const enterKeyHandler = (inputBox, clickOnButton) => {
   inputBox.addEventListener('keypress', () => {
     if (window.event.key == "Enter") {
@@ -180,6 +191,7 @@ enterKeyHandler(search, searchBtn);
 const durationBox = document.getElementById("duration");
 enterKeyHandler(durationBox, sliderBtn);
 
+// Spinner function for bonus
 const toggleSpinner = () => {
   const spinner = document.getElementById("toggle-spinner");
   spinner.classList.toggle("d-none");
